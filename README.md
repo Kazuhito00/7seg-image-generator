@@ -14,6 +14,7 @@
 ```bash
 python create_7segment_dataset.py
 ```
+生成時のオプションとして以下を指定できます。
 * --width<br>
 生成画像の幅<br>
 デフォルト：96
