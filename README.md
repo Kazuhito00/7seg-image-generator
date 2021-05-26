@@ -76,6 +76,9 @@ python create_7segment_dataset.py
 また、「create_7segment_dataset.py」を用いるとデータ拡張を実施した状態で画像を生成します。<br>
 <img src="https://user-images.githubusercontent.com/37477845/118017348-7638dd00-b391-11eb-86e1-5fa2f32fcda4.png" width="400px">
 
+難しすぎるので「create_7segment_dataset_da(easy).py」を追加しました。<br>
+<img src="https://user-images.githubusercontent.com/37477845/118855777-24ec9880-b911-11eb-9d82-888b53a2010e.png" width="400px">
+
 # Author
 高橋かずひと(https://twitter.com/KzhtTkhs)
  
