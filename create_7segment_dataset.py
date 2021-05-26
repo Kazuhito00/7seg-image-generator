@@ -72,7 +72,7 @@ def main():
     # 格納ディレクトリ作成
     dataset_dir = 'dataset/'
     for number in range(12):
-        os.makedirs(dataset_dir + str(number), exist_ok=True)
+        os.makedirs(dataset_dir + '{:02}'.format(number), exist_ok=True)
 
     image_count = 0
 
@@ -130,7 +130,7 @@ def main():
                 cv.waitKey(10)
 
             # 画像保存
-            save_path = os.path.join(dataset_dir, str(number_id),
+            save_path = os.path.join(dataset_dir, '{:02}'.format(number_id),
                                      '{:08}.png'.format(image_count))
             cv.imwrite(save_path, image)
             image_count += 1

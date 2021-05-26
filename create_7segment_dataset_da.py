@@ -45,11 +45,18 @@ def get_args():
 
 def preprocessing_augmentation_function(param_p=0.0):
     transform = [
+        A.Blur(blur_limit=15, p=param_p),
+        A.MotionBlur(blur_limit=15, p=param_p),
+        A.GaussianBlur(blur_limit=15, p=param_p),
+        A.GlassBlur(sigma=0.15, max_delta=4, iterations=1, p=param_p),
+        A.RandomGamma(gamma_limit=(50, 150), p=param_p),
+        A.RandomBrightnessContrast(brightness_limit=0.2,
+                                   contrast_limit=0.2,
+                                   brightness_by_max=True,
+                                   p=param_p),
         A.Rotate(limit=10,
                  interpolation=1,
                  border_mode=4,
-                 value=None,
-                 mask_value=None,
                  p=param_p),
         A.OpticalDistortion(distort_limit=0.5,
                             shift_limit=0.1,
@@ -62,7 +69,20 @@ def preprocessing_augmentation_function(param_p=0.0):
                            interpolation=1,
                            border_mode=4,
                            p=param_p),
+        A.GaussNoise(var_limit=(10.0, 100.0), mean=0, p=param_p),
+        A.ChannelShuffle(p=param_p),
+        A.ToGray(p=param_p),
         A.JpegCompression(quality_lower=0, quality_upper=20, p=param_p),
+        A.Cutout(num_holes=16,
+                 max_h_size=8,
+                 max_w_size=8,
+                 fill_value=255,
+                 p=param_p),
+        A.Cutout(num_holes=16,
+                 max_h_size=8,
+                 max_w_size=8,
+                 fill_value=0,
+                 p=param_p),
     ]
     augmentation_function = A.Compose(transform)
 
@@ -104,7 +124,7 @@ def main():
     # 格納ディレクトリ作成
     dataset_dir = 'dataset/'
     for number in range(12):
-        os.makedirs(dataset_dir + str(number), exist_ok=True)
+        os.makedirs(dataset_dir + '{:02}'.format(number), exist_ok=True)
 
     # データ拡張ファンクション作成
     augmentation = preprocessing_augmentation_function(0.1)
@@ -118,8 +138,20 @@ def main():
         [(113, 167, 154), (0, 6, 0), (104, 139, 129)],
         [(2, 5, 19), (246, 247, 247), (17, 20, 35)],
         [(242, 242, 242), (2, 2, 2), (222, 222, 222)],
-        [(64, 64, 64), (19, 19, 19), (64, 64, 64)],
+        [(3, 0, 12), (39, 87, 211), (68, 71, 72)],
+        [(3, 0, 12), (234, 157, 9), (68, 71, 72)],
+        [(3, 1, 29), (6, 0, 105), (49, 56, 63)],
+        [(14, 123, 0), (235, 235, 235), (14, 123, 0)],
+        [(2, 197, 147), (37, 86, 70), (2, 197, 147)],
+        [(200, 219, 211), (55, 55, 55), (147, 165, 158)],
+        [(64, 64, 64), (35, 233, 155), (64, 64, 64)],
+        [(30, 27, 85), (235, 240, 237), (32, 23, 183)],
+        [(34, 15, 49), (247, 247, 240), (164, 131, 121)],
+        [(7, 0, 3), (0, 215, 238), (66, 68, 68)],
+        [(0, 161, 255), (21, 98, 195), (0, 161, 255)],
+        [(253, 146, 64), (238, 9, 5), (253, 146, 64)],
     ]
+
 
     for _ in tqdm(range(steps)):
         # 画像生成設定
@@ -156,7 +188,7 @@ def main():
                 cv.waitKey(10)
 
             # 画像保存
-            save_path = os.path.join(dataset_dir, str(number_id),
+            save_path = os.path.join(dataset_dir, '{:02}'.format(number_id),
                                      '{:08}.png'.format(image_count))
             cv.imwrite(save_path, image)
             image_count += 1
