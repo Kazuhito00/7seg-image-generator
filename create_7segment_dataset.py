@@ -36,6 +36,8 @@ def get_args():
     parser.add_argument('--erase_debug_window', action='store_true')
     parser.add_argument("--seed", help='random seed', type=int, default=42)
 
+    parser.add_argument("--start_count", type=int, default=0)
+
     args = parser.parse_args()
 
     return args
@@ -67,14 +69,14 @@ def main():
     erase_debug_window = args.erase_debug_window
     seed = args.seed
 
+    image_count = args.start_count
+
     random.seed(seed)
 
     # 格納ディレクトリ作成
     dataset_dir = 'dataset/'
     for number in range(12):
         os.makedirs(dataset_dir + '{:02}'.format(number), exist_ok=True)
-
-    image_count = 0
 
     # カラーセット
     color_set_list = [
