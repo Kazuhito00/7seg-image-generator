@@ -72,6 +72,9 @@ python create_7segment_dataset.py
 * --seed<br>
 乱数シード<br>
 デフォルト：42
+* --start_count<br>
+ファイル連番の開始数<br>
+デフォルト：0
 
 また、「create_7segment_dataset.py」を用いるとデータ拡張を実施した状態で画像を生成します。<br>
 <img src="https://user-images.githubusercontent.com/37477845/118017348-7638dd00-b391-11eb-86e1-5fa2f32fcda4.png" width="400px">
